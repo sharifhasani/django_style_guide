@@ -4,7 +4,7 @@
 
 1- compelete cookiecutter workflow (recommendation: leave project_slug empty) and go inside the project
 ```
-cd Project_name
+cd {{cookiecutter.project_name}}
 ```
 
 2- SetUp venv
