@@ -7,10 +7,18 @@
 cd {{cookiecutter.project_name}}
 ```
 
-2- SetUp venv
+2- SetUp venv 
+
+(Linux)
 ```
 virtualenv venv
 source venv/bin/activate
+```
+
+(Windows)
+```
+virtualenv venv
+./venv/Script/activate
 ```
 
 3- install Dependencies
