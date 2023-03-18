@@ -5,26 +5,11 @@ from rest_framework import serializers
 
 from django.core.validators import MinLengthValidator
 from .validators import number_validator, special_char_validator, letter_validator
-from {{cookiecutter.project_slug}}.users.models import BaseUser , Profile
-from {{cookiecutter.project_slug}}.api.mixins import ApiAuthMixin
-from {{cookiecutter.project_slug}}.users.selectors import get_profile
+from {{cookiecutter.project_slug}}.users.models import BaseUser
 from {{cookiecutter.project_slug}}.users.services import register 
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 
 from drf_spectacular.utils import extend_schema
-
-
-class ProfileApi(ApiAuthMixin, APIView):
-
-    class OutPutSerializer(serializers.ModelSerializer):
-        class Meta:
-            model = Profile 
-            fields = ("bio", "posts_count", "subscriber_count", "subscription_count")
-
-    @extend_schema(responses=OutPutSerializer)
-    def get(self, request):
-        query = get_profile(user=request.user)
-        return Response(self.OutPutSerializer(query, context={"request":request}).data)
 
 
 class RegisterApi(APIView):
@@ -32,7 +17,6 @@ class RegisterApi(APIView):
 
     class InputRegisterSerializer(serializers.Serializer):
         email = serializers.EmailField(max_length=255)
-        bio = serializers.CharField(max_length=1000, required=False)
         password = serializers.CharField(
                 validators=[
                         number_validator,
