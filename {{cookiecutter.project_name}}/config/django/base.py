@@ -89,14 +89,34 @@ DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 if os.environ.get('GITHUB_WORKFLOW'):
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'github_actions',
-            'USER': '{{cookiecutter.postgres_user}}',
-            'PASSWORD': '{{cookiecutter.postgres_password}}',
-            'HOST': '127.0.0.1',
-            'PORT': '5432',
-        }
+        {%- if cookiecutter.database == "postgres" -%}
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': '{{cookiecutter.project_slug}}',
+                'USER': '{{cookiecutter.postgres_user}}',
+                'PASSWORD': '{{cookiecutter.postgres_password}}',
+                'HOST': '127.0.0.1',
+                'PORT': '5432',
+            }
+        {% endif %}
+        {%- if cookiecutter.database == "sqlite" -%}
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': '{{cookiecutter.project_slug}}',  
+            }
+        {% endif %}
+        // TODO : Add MySQL config
+        # {%- if cookiecutter.database == "mysql" -%}
+        #     'default': {
+        #         'ENGINE': 'django.db.backends.mysql', 
+        #         'NAME': '{{cookiecutter.project_slug}}',
+        #         'USER': '{{cookiecutter.postgres_user}}',
+        #         'PASSWORD': '{{cookiecutter.postgres_password}}',
+        #         'HOST': '127.0.0.1',
+        #         'PORT': '3306',
+        #     }
+        # {% endif %}
+
     }
 
 

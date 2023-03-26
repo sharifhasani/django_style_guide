@@ -6,9 +6,10 @@
   "last_name":"author lastName",
 
   "license": ["MIT", "BEER", "None"],
-
-  "postgres_user": "user",
-  "postgres_password": "password",
+  
+  "database": ["postgres", "sqlite", "mysql"],
+  "database_user": "user",
+  "database_password": "password",
 
   "use_jwt": "n",
 
