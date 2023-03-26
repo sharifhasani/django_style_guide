@@ -93,8 +93,8 @@ if os.environ.get('GITHUB_WORKFLOW'):
             'default': {
                 'ENGINE': 'django.db.backends.postgresql',
                 'NAME': '{{cookiecutter.project_slug}}',
-                'USER': '{{cookiecutter.postgres_user}}',
-                'PASSWORD': '{{cookiecutter.postgres_password}}',
+                'USER': '{{cookiecutter.database_user}}',
+                'PASSWORD': '{{cookiecutter.database_password}}',
                 'HOST': '127.0.0.1',
                 'PORT': '5432',
             }
