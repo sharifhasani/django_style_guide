@@ -83,7 +83,24 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='psql://{{cookiecutter.postgres_user}}:{{cookiecutter.postgres_password}}@127.0.0.1:5432/{{cookiecutter.project_slug}}'),
+        {%- if cookiecutter.database == "postgres" -%}
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': '{{cookiecutter.project_slug}}',
+                'USER': '{{cookiecutter.database_user}}',
+                'PASSWORD': '{{cookiecutter.database_password}}',
+                'HOST': '127.0.0.1',
+                'PORT': '5432',
+            }
+        {% endif %}
+        {%- if cookiecutter.database == "sqlite" -%}
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': '{{cookiecutter.project_slug}}',  
+            }
+        {% endif %}
+
+    # 'default': env.db('DATABASE_URL', default='psql://{{cookiecutter.database_user}}:{{cookiecutter.database_password}}@127.0.0.1:5432/{{cookiecutter.project_slug}}'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
@@ -110,8 +127,8 @@ if os.environ.get('GITHUB_WORKFLOW'):
         #     'default': {
         #         'ENGINE': 'django.db.backends.mysql', 
         #         'NAME': '{{cookiecutter.project_slug}}',
-        #         'USER': '{{cookiecutter.postgres_user}}',
-        #         'PASSWORD': '{{cookiecutter.postgres_password}}',
+        #         'USER': '{{cookiecutter.database_user}}',
+        #         'PASSWORD': '{{cookiecutter.database_password}}',
         #         'HOST': '127.0.0.1',
         #         'PORT': '3306',
         #     }
